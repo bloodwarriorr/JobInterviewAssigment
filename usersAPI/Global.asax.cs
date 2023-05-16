@@ -19,22 +19,6 @@ namespace usersAPI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            var allowedUrls = new List<string>
-        {
-        "https://localhost:44393",
-        "https://www.google.com",
-        "https://www.memoglobal.com"
-        };
-
-            var requestUrl = HttpContext.Current.Request.Url.AbsoluteUri;
-
-            if (!allowedUrls.Any(url => requestUrl.StartsWith(url, StringComparison.OrdinalIgnoreCase)))
-            {
-                HttpContext.Current.Response.StatusCode = 403;
-                HttpContext.Current.Response.End();
-            }
-        }
+     
     }
 }

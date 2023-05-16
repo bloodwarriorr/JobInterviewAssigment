@@ -8,17 +8,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Routing;
 
 namespace usersAPI.Controllers
 {
     public class UsersController : ApiController
     {
+        
         IUsersService _usersService = new UserService();
+        [EnableCors(origins: "https://localhost:44393,https://www.google.com,https://www.memoglobal.com", headers: "*", methods: "*")]
         [Route("getUsers/{pageNumber:int}")]
        
         public async Task<IHttpActionResult> GetUsers(int pageNumber)
@@ -26,7 +30,7 @@ namespace usersAPI.Controllers
             try
             {
 
-                IEnumerable<Users> httpUsersRequest = await HttpRequestFunc(pageNumber, -1);
+                IEnumerable<Users> httpUsersRequest = await HttpRequestFunc(pageNumber,-1);
                 _usersService.AddUsers(httpUsersRequest);     
                 return Ok(httpUsersRequest);
             }
@@ -64,9 +68,10 @@ namespace usersAPI.Controllers
         {
             try
             {
+                
                 if (_usersService.IsExist(user.id))
                 {
-                    return BadRequest("user already exists!");
+                    return BadRequest("user with that id is already exists!");
                 }
                 _usersService.AddUser(user);
                 return Ok("User Created successfully!");
@@ -86,6 +91,7 @@ namespace usersAPI.Controllers
                 {
                     return BadRequest("user doesn't exists!");
                 }
+                
                 _usersService.UpdateUser(user);
                 return Ok("User updated successfully!");
             }
@@ -95,15 +101,16 @@ namespace usersAPI.Controllers
             }
         }
         [Route("deleteUser/{id:int}")]
-        public IHttpActionResult DeleteUser([FromBody] Users user)
+        public IHttpActionResult DeleteUser(int id)
         {
             try
             {
-                if (!_usersService.IsExist(user.id))
+                if (!_usersService.IsExist(id))
                 {
                     return BadRequest("user doesn't exists!");
                 }
-                _usersService.DeleteUser(user);
+                
+                _usersService.DeleteUser(id);
                 return Ok("User deleted successfully!");
             }
             catch (Exception)
@@ -176,5 +183,9 @@ namespace usersAPI.Controllers
                 return null;
             }
         }
+
+
+        
     }
-}
+    }
+

@@ -42,9 +42,11 @@ namespace DAL.Services
         {
             return _usersContext.usersDTO.Count() == 0;
         }
-        public void DeleteUser(Users model)
+        public void DeleteUser(int id)
         {
-            _usersContext.usersDTO.Remove(model);
+            Users exists = _usersContext.usersDTO.FirstOrDefault(user => user.id == id);
+            _usersContext.usersDTO.Remove(exists);
+            _usersContext.SaveChanges();
         }
 
         public async Task<IEnumerable<Users>> GetAll()

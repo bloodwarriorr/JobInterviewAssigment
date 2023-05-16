@@ -13,7 +13,7 @@ namespace DAL.Services
         void UpdateUser(Users model);
         void AddUser(Users model);
         void AddUsers(IEnumerable<Users> model);
-        void DeleteUser(Users model);
+        void DeleteUser(int id);
         bool IsEmpty();
         bool IsExist(int id);
     }

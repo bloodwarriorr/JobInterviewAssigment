@@ -1,0 +1,17 @@
+Sql server database was used in this assigment to manage users.
+In order to create the db for this assigment, run the following commands:
+
+
+
+create database Users
+GO
+use Users
+GO
+CREATE TABLE [dbo].[Users](
+	[id] [int] NOT NULL,
+	[email] [nvarchar](50) NULL,
+	[first_name] [nvarchar](50) NULL,
+	[last_name] [nvarchar](50) NULL,
+	[avatar] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO

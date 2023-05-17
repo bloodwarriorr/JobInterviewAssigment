@@ -17,7 +17,7 @@ namespace DAL.Services
         }
         public void AddUser(Users model)
         {
-            if (_usersContext.usersDTO.FirstOrDefault(user => user.id == model.id) == null)
+            if (!IsExist(model.id))
             {
                 _usersContext.usersDTO.Add(model);
             }
@@ -29,7 +29,7 @@ namespace DAL.Services
             List<Users> users = new List<Users>();
             foreach (Users item in model)
             {
-                if (_usersContext.usersDTO.FirstOrDefault(user=>user.id==item.id)==null)
+                if (!IsExist(item.id))
                 {
                     users.Add(item);
                 }
@@ -44,7 +44,7 @@ namespace DAL.Services
         }
         public void DeleteUser(int id)
         {
-            Users exists = _usersContext.usersDTO.FirstOrDefault(user => user.id == id);
+            Users exists = GetUser(id);
             _usersContext.usersDTO.Remove(exists);
             _usersContext.SaveChanges();
         }
@@ -57,13 +57,13 @@ namespace DAL.Services
         }
         public bool IsExist(int id)
         {
-            Users exists= _usersContext.usersDTO.FirstOrDefault(user => user.id == id);
+            Users exists= GetUser(id);
             return exists != null;
         }
-        public async Task<Users> GetUser(int id)
+        public Users GetUser(int id)
         {
-            IEnumerable<Users> users = await GetAll();
-            Users singleUser=users.FirstOrDefault(user => user.id == id);
+           
+            Users singleUser= _usersContext.usersDTO.FirstOrDefault(user => user.id == id);
             return singleUser;
         }
 

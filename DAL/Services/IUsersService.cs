@@ -9,7 +9,7 @@ namespace DAL.Services
     public interface IUsersService
     {
         Task<IEnumerable<Users>> GetAll(); 
-        Task<Users> GetUser(int id);
+        Users GetUser(int id);
         void UpdateUser(Users model);
         void AddUser(Users model);
         void AddUsers(IEnumerable<Users> model);

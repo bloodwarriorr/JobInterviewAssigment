@@ -52,7 +52,7 @@ namespace usersAPI.Controllers
                     IEnumerable<Users> httpUsersRequest = await HttpRequestFunc(-1, id);
                     _usersService.AddUsers(httpUsersRequest);
                 }
-                Users user = await _usersService.GetUser(id);
+                Users user = _usersService.GetUser(id);
                 return Ok(user);
             }
 
